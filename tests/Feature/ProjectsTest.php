@@ -24,4 +24,18 @@ class ProjectsTest extends TestCase
 
         $this->assertDatabaseHas('projects', $attributes);
     }
+
+    public function test_if_a_user_can_list_the_projects_created()
+    {
+        $this->withoutExceptionHandling();
+
+        $attributes = [
+            'title' => $this->faker->sentence,
+            'description' => $this->faker->paragraph,
+        ];
+
+        $this->post('/projects', $attributes);
+
+        $this->get('/projects')->assertSee($attributes['title']);
+    }
 }
