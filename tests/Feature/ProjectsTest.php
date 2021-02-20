@@ -38,4 +38,17 @@ class ProjectsTest extends TestCase
 
         $this->get('/projects')->assertSee($attributes['title']);
     }
+
+    public function test_if_a_user_is_redirected_to_the_projects_route_after_creating_a_project()
+    {
+        $this->withoutExceptionHandling();
+
+        $attributes = [
+            'title' => $this->faker->sentence,
+            'description' => $this->faker->paragraph,
+        ];
+
+        $this->post('/projects', $attributes)->assertRedirect('projects');
+
+    }
 }
